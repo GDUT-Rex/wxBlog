@@ -51,9 +51,7 @@ Page({
     },
     like(e) {
         //  like_.like()
-        wx.vibrateShort({
-
-        })
+        wx.vibrateShort({})
         let stroage = wx.getStorageSync('final_data');
         if (stroage) {
             let like_count = this.data.like_count,
@@ -68,23 +66,10 @@ Page({
                     'res': res
                 })
             })
-            if (!liked) {
-                liked = true,
-                    like_count++;
-                wx.showToast({
-                    title: '点赞成功',
-                    icon: 'success',
-                    duration: 2000
-                })
-            } else {
-                liked = false,
-                    like_count--;
-                wx.showToast({
-                    title: '取消成功',
-                    icon: 'success',
-                    duration: 2000
-                })
-            }
+            wx.showToast({
+                title: !liked?'点赞成功':"取消成功",
+            })
+            !liked?(liked = true,like_count++):(liked=false,like_count--)
             this.setData({
                 liked: liked,
                 like_count: like_count
@@ -276,21 +261,13 @@ Page({
 
     },
     collection(e){
-        wx.vibrateShort({
-
-        })
+        wx.vibrateShort({})
         let colloced = this.data.iscollec;
         let post = [this.data.post],
             collec = wx.getStorageSync('collection');
         if (!colloced){
-            console.log("点赞")
-            if (collec) {
-                var collec_post = collec.concat(post)
-                wx.setStorageSync('collection', collec_post)
-            } else {
-                var collec_post = post;
-                wx.setStorageSync('collection', collec_post)
-            }
+            let collec_post = collec?collec.concat(post):post
+            wx.setStorageSync('collection', collec_post)
             this.setData({
                 iscollec:true 
             })

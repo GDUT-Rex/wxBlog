@@ -18,7 +18,6 @@ function transDate (mescStr) {
     var D1 = date1.getDate();
     var H1 = date1.getHours();
     var Mi1 = date1.getMinutes();
-    console.log(M1 + " " + D1 + "....")
     if (M1 > M2 || D1 > D2) {
         return (M + D + H + Mi)
     }

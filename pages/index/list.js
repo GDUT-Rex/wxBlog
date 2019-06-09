@@ -1,4 +1,14 @@
 // pages/index/list.js
+
+function timesago(date) {
+    const date_ = Date.parse(new Date(date)),
+        timeDifference = Date.parse(new Date()) - date_
+
+    let ago_ = timeDifference / 1000 / 3600 / 24
+
+    console.log(ago_)
+    return ago_
+}
 const app = getApp()
 var time = require('../../utils/util.js')
 var router = require('../index/router.js');
@@ -33,9 +43,14 @@ Page({
         router.route_request('mp/posts', info).catch(res => {
           
             let post_ = res.posts
-            for (var i = 0; i < post_.length; i++) {
-                post_[i]['time'] = time.formatTime(new Date(post_[i]['time'].replace('GMT', '')))
-            }
+            post_.forEach(res=>{
+                console.log(timesago(res['time']))
+
+                res['time'] = time.formatTime(new Date(res['time'].replace('GMT',''))) 
+            })
+            // for (var i = 0; i < post_.length; i++) {
+            //     post_[i]['time'] = time.formatTime(new Date(post_[i]['time'].replace('GMT', '')))
+            // }
             this.setData({
                 posts: post_
             })
@@ -77,9 +92,11 @@ Page({
         console.log('page' + page)
         router.route_request('mp/posts', info).catch(res => {
             let news = res.posts
-            for (var i = 0; i < news.length; i++) {
-                news[i]['time'] = time.formatTime(new Date(news[i]['time'].replace('GMT', '')))
-            }
+            news.forEach(new_=>{
+                console.log()
+                new_['time'] = time.formatTime(new Date(new_['time'].replace('GMT', '')))
+            })
+          
             this.setData({
                 posts: posts.concat(news)
             })
